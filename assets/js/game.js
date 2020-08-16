@@ -28,7 +28,7 @@ while (playerHealth > 0 && enemyHealth > 0) {
    }
   
    // remove enemy's health by subtracting the amount set in the playerAttack variable
-   enemyHealth = enemyHealth - playerAttack;
+   enemyHealth = Math.max(0, enemyHealth - playerAttack);
    console.log(
      playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
    );
@@ -52,7 +52,7 @@ while (playerHealth > 0 && enemyHealth > 0) {
    }
   
    // remove player's health by subtracting the amount set in the enemyAttack variable
-   playerHealth = playerHealth - enemyAttack;
+   playerHealth = Math.max(0, playerHealth - enemyAttack);
    console.log(
      enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
    );
@@ -145,8 +145,8 @@ enemyHealth = Math.max(0, enemyHealth - damage);
 }
 
 // function to generate a random numeric value
-var randomNumber = function(40, 60) {
-    var value = Math.floor(Math.random() * (21)) + 40;
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
 
     return value;
 };
@@ -162,7 +162,7 @@ for (var i = 0; i < enemyNames.length; i++) {
        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
            var pickedEnemyName = enemyNames[i];
  
-           enemyHealth = 50;
+           enemyHealth = randomNumber();
            fight(pickedEnemyName);
 
            var damage = randomNumber(enemyAttack - 3, enemyAttack);
@@ -201,7 +201,7 @@ var shop = function() {
  
            // increase health and decrease money
            playerHealth = playerHealth + 20;
-           playerMoney = playerMoney - 7;
+           playerMoney = Math.max(0, playerMoney - 10);
        }
        else {
            window.alert("You don't have enough money!");
@@ -232,11 +232,14 @@ var shop = function() {
            shop();
            break;
         }
-
-
-
            if (shop0ptionPrompt === "refill" || shop0ptionPrompt === "REFILL") {
    }
+};
+
+var randomNumber = function() {
+    var value = Math.floor(Math.random() * 21) + 40;
+
+    return value;
 };
  
 // ask player if they'd like to play again
